@@ -1,0 +1,16 @@
+CACHE MANIFEST 
+# v3 - 18/08/2020 
+
+
+css/index.css
+
+index.html
+
+exploits/common.js
+exploits/exploit.js
+exploit/exploit_loader.js
+exploit/utils.js
+exploits/jailbreak/HEN.js
+exploits/jailbreak/Mira.js
+exploits/payloads/disableUpdates.js
+exploits/payloads/enableUpdates.js

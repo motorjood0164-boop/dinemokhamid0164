@@ -1,0 +1,42 @@
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: #003791;
+  color: #ffffff;
+}
+
+body > .exploits-message {
+  font-size: 35px;
+  margin: 50px 0px 50px 0px;
+  text-align: center;
+}
+
+body > .exploits > .jailbreak,
+body > .exploits > .payloads {
+  text-align: center;
+  margin: 50px 0px 50px 0px;
+}
+
+body > .exploits .title {
+  font-size: 25px;
+  line-height: 75px;
+  font-weight: 700;
+}
+
+body > .exploits .exploits-scripts > .button {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0px 10px 0px 10px;
+  min-width: 200px;
+  min-height: 50px;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+  background-color: #003263;
+}
+
+body > .exploits .exploits-scripts > .button:hover {
+  background-color: #0059b0;
+}
+
+body > .exploits .exploits-scripts > .button:active {
+  background-color: #0073e3;
+}

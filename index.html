@@ -1,121 +1,62 @@
-<!DOCTYPE html>
-<html lang="nl">
+<html manifest="offlineCache.manifest">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn PS4 Host Menu</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #0078d4;
-            margin-bottom: 5px;
-        }
-        p {
-            color: #aaaaaa;
-            font-size: 14px;
-        }
-        .status-box {
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            padding: 10px;
-            border-radius: 8px;
-            display: inline-block;
-            margin: 20px auto;
-            min-width: 300px;
-        }
-        .status-text {
-            font-weight: bold;
-            color: #00ff00;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 15px;
-            padding: 20px;
-        }
-        .btn {
-            background-color: #0078d4;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
-            min-width: 180px;
-        }
-        .btn:hover {
-            background-color: #005a9e;
-            transform: scale(1.05);
-        }
-        .btn:active {
-            transform: scale(0.98);
-        }
-        .footer {
-            margin-top: 50px;
-            font-size: 12px;
-            color: #555555;
-        }
-    </style>
-    <script>
-        // Functie om de status op het scherm bij te werken
-        function updateStatus(message, color = '#00ff00') {
-            const statusEl = document.getElementById('status');
-            statusEl.innerText = message;
-            statusEl.style.color = color;
-        }
+	<meta charset="utf-8" />
+	<title>PS4 v6.72 Exploits Menu</title>
 
-        // Functie die wordt aangeroepen als je op GoldHEN klikt
-        function loadGoldHEN() {
-            updateStatus("Exploit initialiseren... Even geduld.", "#ffcc00");
-            
-            // Hier komt later de specifieke JavaScript-code voor jouw firmware
-            // Bijvoorbeeld het inladen van de WebKit exploit en goldhen.bin
-            
-            setTimeout(() => {
-                // Dit is een voorbeeld-animatie, vervang dit door je echte exploit-code
-                updateStatus("GoldHEN Succesvol Geladen!", "#00ff00");
-            }, 3000);
-        }
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
 
-        // Functie voor de FTP-payload
-        function loadFTP() {
-            updateStatus("FTP Server payload verzenden...", "#ffcc00");
-            // Voeg hier je FTP-specifieke payloadcode toe
-        }
-    </script>
+	<script src="exploits/utils.js"></script>
+	<script>
+		window.applicationCache.addEventListener("progress", updateCacheProgress, false);
+		window.applicationCache.oncached = function (e) { onCacheInstallation(); };
+		window.applicationCache.onupdateready = function (e) { onCacheInstallation(); };
+	</script>
+
+	<script src="exploits/common.js"></script>
+	<script src="exploits/exploit.js"></script>
 </head>
+
 <body>
+	<div id="exploitsMessage" class="exploits-message">PS4 v6.72 Exploits Menu</div>
+	<div class="exploits">
+		<div class="jailbreak">
+			<div class="title">Jailbreak</div>
+			<div class="exploits-scripts">
+				<button class="button" onclick="loadExploitAndHEN()">Load Exploit + HEN</button>
+				<button class="button" onclick="loadExploitAndMira()">Load Exploit + Mira</button>
+			</div>
+		</div>
+		<div class="payloads">
+			<div class="title">Payloads</div>
+			<div class="exploits-scripts">
+				<button class="button" onclick="disableUpdates()">Disable Updates</button>
+				<button class="button" onclick="enableUpdates()">Enable Updates</button>
+			</div>
+		</div>
+	</div>
 
-    <h1>Mijn Persoonlijke PS4 Exploit Host</h1>
-    <p>Selecteer een payload om te laden op je PlayStation 4</p>
+	<script>
+		function loadExploitAndHEN() {
+			updateExploitsMessage("Loading Exploit + HEN ...");
+			setTimeout(jailbreakPs4(true), 500);
+		}
 
-    <div class="status-box">
-        Status: <span id="status" class="status-text">Klaar voor actie</span>
-    </div>
+		function loadExploitAndMira() {
+			updateExploitsMessage("Loading Exploit + Mira ...");
+			setTimeout(jailbreakPs4(false), 500);
+		}
 
-    <div class="container">
-        <!-- Knop voor GoldHEN -->
-        <button class="btn" onclick="loadGoldHEN()">Laad GoldHEN</button>
-        
-        <!-- Knop voor FTP (omdat je FileZilla gebruikt) -->
-        <button class="btn" onclick="loadFTP()">Start FTP Server</button>
-    </div>
+		function disableUpdates() {
+			updateExploitsMessage("Disabling Updates ...");
+			loadPayload("exploits/payloads/disableUpdates.js", "Updates disabled !");
+		}
 
-    <div class="footer">
-        Host via GitHub Pages | Alleen voor educatieve doeleinden
-    </div>
-
+		function enableUpdates() {
+			updateExploitsMessage("Enabling Updates ...");
+			loadPayload("exploits/payloads/enableUpdates.js", "Updates enabled !");
+		}
+	</script>
 </body>
+
 </html>
