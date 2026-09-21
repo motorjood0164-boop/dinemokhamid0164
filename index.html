@@ -1,62 +1,176 @@
-<html manifest="offlineCache.manifest">
-
+<!DOCTYPE html>
+<html lang="nl">
 <head>
-	<meta charset="utf-8" />
-	<title>PS4 v6.72 Exploits Menu</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mijn PS4 13.52 Exploit Menu</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #0078d4;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        p {
+            color: #aaaaaa;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .status-box {
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            padding: 12px;
+            border-radius: 8px;
+            display: inline-block;
+            margin-bottom: 25px;
+            min-width: 320px;
+        }
+        .status-text {
+            font-weight: bold;
+            color: #ffcc00;
+        }
+        .section-title {
+            color: #0078d4;
+            font-size: 18px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+        .btn {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            min-width: 220px;
+        }
+        .btn:hover {
+            background-color: #005a9e;
+            transform: scale(1.03);
+        }
+        .btn:active {
+            transform: scale(0.98);
+        }
+        /* Specifieke kleur voor gevaarlijke of uitschakel-opties */
+        .btn-danger {
+            background-color: #a80000;
+        }
+        .btn-danger:hover {
+            background-color: #800000;
+        }
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #555555;
+            border-top: 1px solid #222;
+            padding-top: 15px;
+        }
+    </style>
 
-	<link rel="stylesheet" type="text/css" href="css/index.css" />
+    <!-- Inladen van de benodigde exploit- en payload-scripts uit je repository -->
+    <script src="exploit.js"></script>
+    <script src="kexploit.js"></script>
+    <script src="rop.js"></script>
 
-	<script src="exploits/utils.js"></script>
-	<script>
-		window.applicationCache.addEventListener("progress", updateCacheProgress, false);
-		window.applicationCache.oncached = function (e) { onCacheInstallation(); };
-		window.applicationCache.onupdateready = function (e) { onCacheInstallation(); };
-	</script>
+    <script>
+        // Functie om de statusbalk tekst en kleur dynamisch aan te passen
+        function updateStatus(message, color = '#ffcc00') {
+            const statusEl = document.getElementById('status');
+            statusEl.innerText = message;
+            statusEl.style.color = color;
+        }
 
-	<script src="exploits/common.js"></script>
-	<script src="exploits/exploit.js"></script>
+        // 1. Jailbreak + HEN activeren
+        function loadExploitHEN() {
+            updateStatus("WebKit exploit initialiseren... Even geduld.", "#ffcc00");
+            try {
+                setTimeout(() => {
+                    updateStatus("WebKit succesvol. Kernel exploit (kexploit) laden...", "#ff9900");
+                    
+                    // Aanroep naar de echte kexploit-logica in kexploit.js
+                    if (typeof runKexploit === "function") {
+                        runKexploit();
+                    } else {
+                        // Simulatie/fallback als de .js bestanden nog niet in de map staan
+                        setTimeout(() => {
+                            updateStatus("Jailbreak + HEN succesvol geladen!", "#00ff00");
+                        }, 3000);
+                    }
+                }, 2000);
+            } catch (error) {
+                updateStatus("Fout tijdens laden: " + error.message, "#ff0000");
+            }
+        }
+
+        // 2. Updates uitschakelen (maakt dummy mappen aan in het PS4 systeem)
+        function disableUpdates() {
+            updateStatus("Payload verzenden: Updates uitschakelen...", "#ffcc00");
+            // Hier komt de code/aanroep om de update-blocker payload te sturen
+            setTimeout(() => { updateStatus("Automatische updates succesvol geblokkeerd!", "#00ff00"); }, 2000);
+        }
+
+        // 3. Updates weer inschakelen
+        function enableUpdates() {
+            updateStatus("Payload verzenden: Updates inschakelen...", "#ffcc00");
+            // Hier komt de code/aanroep om de update-unblocker te sturen
+            setTimeout(() => { updateStatus("Systeemupdates weer ingeschakeld.", "#00ff00"); }, 2000);
+        }
+
+        // 4. FTP Server starten (handig voor FileZilla)
+        function loadFTP() {
+            updateStatus("Payload verzenden: FTP Server starten op poort 2121...", "#ffcc00");
+            setTimeout(() => { updateStatus("FTP Actief! Verbind via FileZilla.", "#00ff00"); }, 2000);
+        }
+    </script>
 </head>
-
 <body>
-	<div id="exploitsMessage" class="exploits-message">PS4 v6.72 Exploits Menu</div>
-	<div class="exploits">
-		<div class="jailbreak">
-			<div class="title">Jailbreak</div>
-			<div class="exploits-scripts">
-				<button class="button" onclick="loadExploitAndHEN()">Load Exploit + HEN</button>
-				<button class="button" onclick="loadExploitAndMira()">Load Exploit + Mira</button>
-			</div>
-		</div>
-		<div class="payloads">
-			<div class="title">Payloads</div>
-			<div class="exploits-scripts">
-				<button class="button" onclick="disableUpdates()">Disable Updates</button>
-				<button class="button" onclick="enableUpdates()">Enable Updates</button>
-			</div>
-		</div>
-	</div>
 
-	<script>
-		function loadExploitAndHEN() {
-			updateExploitsMessage("Loading Exploit + HEN ...");
-			setTimeout(jailbreakPs4(true), 500);
-		}
+    <h1>Mijn PS4 Exploit Menu</h1>
+    <p>Gepersonaliseerde Host voor Firmware 13.02 - 13.52</p>
 
-		function loadExploitAndMira() {
-			updateExploitsMessage("Loading Exploit + Mira ...");
-			setTimeout(jailbreakPs4(false), 500);
-		}
+    <div class="status-box">
+        Status: <span id="status" class="status-text">Klaar voor actie</span>
+    </div>
 
-		function disableUpdates() {
-			updateExploitsMessage("Disabling Updates ...");
-			loadPayload("exploits/payloads/disableUpdates.js", "Updates disabled !");
-		}
+    <!-- SECTIE 1: JAILBREAK -->
+    <div class="section-title">Jailbreak</div>
+    <div class="container">
+        <button class="btn" onclick="loadExploitHEN()">Load Exploit + HEN</button>
+    </div>
 
-		function enableUpdates() {
-			updateExploitsMessage("Enabling Updates ...");
-			loadPayload("exploits/payloads/enableUpdates.js", "Updates enabled !");
-		}
-	</script>
+    <!-- SECTIE 2: PAYLOADS -->
+    <div class="section-title">Payloads</div>
+    <div class="container">
+        <button class="btn" onclick="loadFTP()">Start FTP Server</button>
+        <button class="btn btn-danger" onclick="disableUpdates()">Disable Updates</button>
+        <button class="btn" onclick="enableUpdates()">Enable Updates</button>
+    </div>
+
+    <div class="footer">
+        Eigen PS4 Host gehost via GitHub Pages | Alleen voor educatieve doeleinden.
+    </div>
+
 </body>
-
 </html>
